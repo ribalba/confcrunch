@@ -1,0 +1,45 @@
+<!-- rate_conference.html -->
+{% extends "base.html" %}
+
+{% block title %}Rate {{ conference.name }}{% endblock %}
+
+{% block content %}
+<div class="ui raised very padded text container segment">
+    <h2 class="ui header">Rate {{ conference.name }}</h2>
+    <p>Your review can only be seen by the conference organizers. Your email will never be displayed publicly!</p>
+    <form class="ui form" method="post">
+        {% csrf_token %}
+        <div class="field">
+            <label>Rating</label>
+            <input type="hidden" name="rating" id="id_rating" value="1">
+            <div id="star-rating" class="ui large red rating" data-icon="heart" data-rating="1" data-max-rating="5"></div>
+        </div>
+        <div class="field">
+            <label for="id_email">Email:*</label>
+            <input type="email" name="email" maxlength="254" id="id_email">
+        </div>
+        <div class="field">
+            <label for="id_feedback">Feedback:*
+                <i class="question circle outline icon link" data-content="Consider how welcoming the conference is, the quality of the papers, the organisation" data-variation="wide"></i>
+            </label>
+
+            <textarea name="feedback" cols="40" rows="10" required="" id="id_feedback"></textarea>
+        </div>
+        <button type="submit" class="ui primary button">Submit Rating</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block jsscript %}
+
+$(document).ready(function() {
+    $('.circle.icon').popup();
+    $('#star-rating').rating({
+        initialRating: 1,
+        maxRating: 5,
+        onRate: function(value) {
+            $('input[name="rating"]').val(value);
+        }
+    });
+});
+{% endblock %}

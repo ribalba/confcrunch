@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}{{ conference.name }}{% endblock %}
+
+{% block content %}
+<div class="ui raised very padded text container segment">
+    <h2 class="ui header">{{ conference.name }} <a href="{{ conference.url }}" class="ui tiny icon basic button" target="_blank"><i class="external alternate icon"></i></a></h2>
+    <p>{{ conference.description }}</p>
+
+    {% if rating_count > 0 %}
+        <p>Average Rating: <div class="ui massive red disabled rating" data-icon="heart" data-rating="{{average_rating}}" data-max-rating="5"></div></p>
+        <p>Total Ratings: {{ rating_count }}</p>
+    {% else %}
+        <p>No ratings yet.</p>
+    {% endif %}
+
+
+    <a href="{{ conference.get_rating_submit_url }}" class="ui primary button">Submit a Rating</a>
+
+</div>
+
+
+
+{% endblock %}
+
+{% block jsscript %}
+    $(document).ready(function() {
+        $('.rating').rating();
+    })
+    {% if is_saved %}
+        $(document).ready(function() {
+            $.toast({
+                class: 'success',
+                title: 'Saved',
+                message: 'Thank you for submitting your review.',
+                showProgress: 'bottom',
+            });
+        })
+    {% endif %}
+{% endblock %}
+
+

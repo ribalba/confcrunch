@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}ConfCrunch{% endblock %}
+
+{% block content %}
+<div class="ui very padded segment">
+<h1>Welcome to ConfCrunch</h1>
+<p>
+Welcome to our platform where you can share your feedback about conferences and workshops you've attended. In a world where everything is rated, why not events? By providing your insights, others can get a real sense of what's good and what could be improved at a conference. Your feedback also offers valuable information to the organizers. Please note that this is an alpha release, and many features are still under development.
+</p>
+<p>If you have any questions or suggestions, feel free to contact us: <a class="ui tiny label" href="https://github.com/ribalba/confcrunch"><i class="github icon"></i>ConfCrunch</a></p>
+
+</div>
+<div class="ui very padded  segment">
+    <h2 class="ui header">Current Conferences</h2>
+    <div class="ui relaxed divided list">
+        {% for conference in conferences %}
+        <div class="item">
+            <i class="large middle aligned calendar icon"></i>
+            <div class="content">
+                <a class="header" href="{{ conference.get_absolute_url }}">{{ conference.name }}</a>
+                <div class="description">{{ conference.description|truncatewords:20 }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
